@@ -13,13 +13,15 @@ namespace battleship {
 
     class GameBoard {
     public:
+        pair<int, int> getSize() const;
+
     protected:
         const char WATER{'~'};
         const char HIT{'X'};
         const char MISS{'O'};
         const int height{10};
         const int width{10};
-        vector<vector<char>> board;//{height, vector<char>(width, WATER)}; // 2D vector to represent the game board
+        //vector<vector<char>> board;//{height, vector<char>(width, WATER)}; // 2D vector to represent the game board
     };
 
 } // battleship

@@ -12,14 +12,11 @@
 
 #include "Ship.h"
 #include "Player.h"
+#include "PlayerEnum.h"
 
 using namespace std;
 
 namespace battleship {
-    enum class PlayerEnum {
-        HUMAN,
-        COMPUTER
-    };
     class Game {
         const char WATER{'~'};
     public:
@@ -36,6 +33,7 @@ namespace battleship {
         }
         void initialize();
         bool isDone() const;
+        bool addShip(PlayerEnum &playerType, int size, int row, int col, char orientation);
         bool addShip(Player &player, int size, int row, int col, char orientation);
 
         vector<int> getShipSizes() {
@@ -51,7 +49,7 @@ namespace battleship {
                 std::cout << j << " ";
             }
             for(int i = 0; i < height; ++i) {
-                // print row header
+                // print _row header
                 std::cout << i << " ";
                 for(int j = 0; j < width; ++j) {
                     std::cout << board[i][j] << " ";
@@ -68,7 +66,7 @@ namespace battleship {
         // Game board and other protected members can be defined here
         int height, width;
         Player player1, player2;
-        vector<vector<char>> board; // Example board size
+        vector<vector<char>> board; // Example board shipSize
         vector<Ship> ships; // Example ship sizes
     };
 

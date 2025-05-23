@@ -7,6 +7,7 @@
 
 #include <iostream>
 
-#include "game.h"
+#include "Game.h"
+#include "PlayerEnum.h"
 
 #endif //BATTLESHIP_MAIN_H

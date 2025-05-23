@@ -7,7 +7,8 @@
 using namespace std;
 using namespace battleship;
 
-auto shipSizes = {2, 3, 4, 5};
+auto shipSizes = {2, 3, 3, 4, 5};
+auto shipNames = {"Destroyer", "Submarine", "Cruiser", "Battleship", "Carrier"};
 
 void promptPlayerShipSetup(Game &game){
     auto shipSizes = game.getShipSizes();
@@ -16,9 +17,9 @@ void promptPlayerShipSetup(Game &game){
         while(!placed) {
             int row, col;
             char orientation;
-            std::cout << "Enter ship size: " << size << ", row, column, and orientation (H/V): ";
+            std::cout << "Enter ship shipSize: " << size << ", _row, column, and orientation (H/V): ";
             std::cin >> row >> col >> orientation;
-            placed = game.addShip(size, row, col, orientation); // may fail
+            placed = game.addShip(PlayerEnum::HUMAN, size, row, col, orientation); // may fail
         }
     }
 }
@@ -43,7 +44,7 @@ int main(int argc, char *argv[]) {
 
         // Get player input
         std::string input;
-        std::cout << "Enter your move (row and column): ";
+        std::cout << "Enter your move (_row and column): ";
         std::cin >> input;
 
         // Process the input

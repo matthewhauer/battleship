@@ -6,6 +6,8 @@
 #define BATTLESHIP_SHIP_H
 
 #include <vector>
+#include <string_view>
+#include <string>
 
 using namespace std;
 
@@ -13,9 +15,9 @@ namespace battleship {
 
     class Ship {
     public:
-        // Constructor to initialize the ship with size, row, column, and orientation
-        Ship(int size, int row, int col, char orientation)
-            : size(size), row(row), col(col), orientation(orientation), sunk(false) {}
+        // Constructor to initialize the ship with shipSize, _row, column, and orientation
+        Ship(string_view name, int size, int row, int col, char orientation)
+            : _name(name), shipSize(size), _row(row), _col(col), _orientation(orientation), sunk(false) {}
 
         // Method to check if the ship is sunk
         bool isSunk() const {
@@ -27,22 +29,59 @@ namespace battleship {
             sunk = true;
         }
 
-        // Method to get the size of the ship
+        // Method to get the shipSize of the ship
         int getSize() const {
-            return size;
+            return shipSize;
         }
 
         // Method to get the position of the ship
-        void getPosition(int &r, int &c) const {
-            r = row;
-            c = col;
+        pair<int, int> getPosition() const {
+            return make_pair(_row, _col);
         }
+
+        bool isStraightOverlap(int row, int col, int size, char orientation) {
+            // check same row if 'H' or same column if 'V'
+
+            if(_orientation == 'H') {
+                if(_row == row)
+                    return (_col > col + size -1 && // left of this not impacted
+                            _col + shipSize -1 < col); // right of this not impacted
+            } else { // vertical
+                if(_col == col)
+                    return (_row < row + size && // top of this not impacted
+                            _row + shipSize > row); // bottom of this not impacted
+            }
+            return false;
+        }
+
+        bool isCrossOverlap(int row, int col, int size, char orientation) {
+            if(_orientation == 'H') {
+                return (_row < row + size
+                        && _row + shipSize > row);
+            } else { // vertical
+                return (_col < col + size
+                        && _col + shipSize > col);
+            }
+        }
+
+        bool isOverlapping(int row, int col, int size, char orientation) {
+            if(_row == row && _col == col) {
+                return true; // same origin
+            }
+            if(orientation == _orientation){
+                return isStraightOverlap(row, col, size, char orientation);
+            } else {
+                return isCrossOverlap(row, col, size, char orientation);
+            }
+        }
+
     private:
-        int size; // Size of the ship
+        string _name;
+        int shipSize; // Size of the ship
         vector<bool> hits;
-        int row;  // Row position on the board
-        int col;  // Column position on the board
-        char orientation; // Orientation of the ship ('H' for horizontal, 'V' for vertical)
+        int _row;  // Row position on the board
+        int _col;  // Column position on the board
+        char _orientation; // Orientation of the ship ('H' for horizontal, 'V' for vertical)
         bool sunk; // Status of the ship (sunk or not)
     };
 
