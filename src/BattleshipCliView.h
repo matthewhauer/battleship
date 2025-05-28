@@ -17,7 +17,7 @@ namespace battleship {
     class BattleshipCliView {
     public:
         void showBoard(const GameBoard& board, bool revealShips = false, const PlayerEnum &whichPlayer = PlayerEnum::HUMAN) const;
-        pair<int, int> promptForCoordinates() const;
+        auto promptForCoordinates() const;
         void showMessage(const string_view& message) const;
     };
 }

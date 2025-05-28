@@ -16,13 +16,13 @@ namespace battleship {
         for (auto y : views::iota(0, szY)) {
             std::cout << y << " ";
             for (auto x : views::iota(0, szX)) {
-                if (board.wasShotAt(x, y)) {
+                /*if (board.wasShotAt(x, y)) {
                     std::cout << (board.isHit(x, y) ? "X " : "O ");
                 } else if (revealShips && std::ranges::any_of(board.getShips(), [&](const Ship& s) { return s.occupies(x, y); })) {
                     std::cout << "S ";
                 } else {
                     std::cout << ". ";
-                }
+                }*/
             }
             std::cout << "\n";
         }

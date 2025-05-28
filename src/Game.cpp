@@ -21,11 +21,11 @@ namespace battleship {
         return false;
     }
 
-    bool Game::addShip(PlayerEnum &playerType, int size, int row, int col, char orientation) {
-        return addShip(playerType == PlayerEnum::HUMAN ? player1 : player2, size, row, col, orientation);
+    bool Game::addShip(PlayerEnum &&playerType, int size, int row, int col, char orientation, string_view shipName) {
+        return addShip(playerType == PlayerEnum::HUMAN ? player1 : player2, size, row, col, orientation, shipName);
     }
 
-    bool Game::addShip(Player &thePlayer, int size, int row, int col, char orientation) {
+    bool Game::addShip(Player &thePlayer, int size, int row, int col, char orientation, string_view shipName = "AnonShip"sv) {
         // Check if the ship can be placed on the board
         if (row < 0 || (row+size-1) >= height || col < 0 || (col+size-1) >= width) {
             std::cout << "Invalid position." << std::endl;
@@ -41,6 +41,7 @@ namespace battleship {
             }
         }
         // Add a ship to the game board
+        ships.emplace_back(shipName, size, row, col, orientation);
         std::cout << "Added ship of shipSize " << size << " at (" << row << ", " << col << ") with orientation " << orientation << "." << std::endl;
         return true; // successfully added
     }

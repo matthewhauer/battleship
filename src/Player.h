@@ -17,7 +17,7 @@ namespace battleship {
     using coord = pair<int, int>;
     class Player {
         public:
-            Player(string name) : name(name), myBoard(), enemyBoard() {}
+            Player(string_view name) : name(name), myBoard(), enemyBoard() {}
 
             // Method to get the player's name
             string getName() const {

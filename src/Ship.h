@@ -39,7 +39,7 @@ namespace battleship {
             return make_pair(_row, _col);
         }
 
-        bool isStraightOverlap(int row, int col, int size, char orientation) {
+        bool isStraightOverlap(int row, int col, int size, char orientation) const {
             // check same row if 'H' or same column if 'V'
 
             if(_orientation == 'H') {
@@ -54,7 +54,7 @@ namespace battleship {
             return false;
         }
 
-        bool isCrossOverlap(int row, int col, int size, char orientation) {
+        bool isCrossOverlap(int row, int col, int size, char orientation) const {
             if(_orientation == 'H') {
                 return (_row < row + size
                         && _row + shipSize > row);
@@ -64,14 +64,14 @@ namespace battleship {
             }
         }
 
-        bool isOverlapping(int row, int col, int size, char orientation) {
+        bool isOverlapping(int row, int col, int size, char orientation) const {
             if(_row == row && _col == col) {
                 return true; // same origin
             }
             if(orientation == _orientation){
-                return isStraightOverlap(row, col, size, char orientation);
+                return isStraightOverlap(row, col, size, orientation);
             } else {
-                return isCrossOverlap(row, col, size, char orientation);
+                return isCrossOverlap(row, col, size, orientation);
             }
         }
 

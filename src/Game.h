@@ -18,44 +18,23 @@ using namespace std;
 
 namespace battleship {
     class Game {
-        const char WATER{'~'};
     public:
         Game() : Game("human"sv, 10, 10){};
 
         Game(string_view playerName, int h, int w) : player1(playerName), player2("Computer"sv),
             height(h), width(w) {
-            // Initialize the game board with empty spaces
-            for(int i = 0; i < height; ++i) {
-                for(int j = 0; j < width; ++j) {
-                    board[i][j] = WATER; // '~' represents empty water
-                }
-            }
         }
         void initialize();
         bool isDone() const;
-        bool addShip(PlayerEnum &playerType, int size, int row, int col, char orientation);
-        bool addShip(Player &player, int size, int row, int col, char orientation);
+        bool addShip(PlayerEnum &&playerType, int size, int row, int col, char orientation, string_view shipName);
+        bool addShip(Player &player, int size, int row, int col, char orientation, string_view shipName);
 
         vector<int> getShipSizes() {
             return {2, 3, 4, 5};
         }
 
         void displayBoard() {
-            // Display the current state of the game board
-            //std::cout << "Displaying game board." << std::endl;
-            // print column header
-            cout << "   ";
-            for(int j = 0; j < width; ++j) {
-                std::cout << j << " ";
-            }
-            for(int i = 0; i < height; ++i) {
-                // print _row header
-                std::cout << i << " ";
-                for(int j = 0; j < width; ++j) {
-                    std::cout << board[i][j] << " ";
-                }
-                std::cout << std::endl;
-            }
+
         }
 
         void makeMove(int row, int col) {
@@ -66,7 +45,6 @@ namespace battleship {
         // Game board and other protected members can be defined here
         int height, width;
         Player player1, player2;
-        vector<vector<char>> board; // Example board shipSize
         vector<Ship> ships; // Example ship sizes
     };
 

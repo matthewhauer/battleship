@@ -1,0 +1,14 @@
+target_sources(battleship
+    PUBLIC
+        src/main.cpp
+        src/main.h
+        src/Game.cpp
+        src/Game.h
+        src/Ship.cpp
+        src/Ship.h
+        src/Player.cpp
+        src/Player.h
+        src/GameBoard.cpp
+        src/GameBoard.h
+        src/BattleshipCliView.cpp
+        src/BattleshipCliView.h)
