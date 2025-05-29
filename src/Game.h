@@ -16,13 +16,18 @@
 
 using namespace std;
 
+struct ShipRef{
+    string_view shipName;
+    int length;
+};
+
 namespace battleship {
     class Game {
     public:
         Game() : Game("human"sv, 10, 10){};
 
         Game(string_view playerName, int h, int w) : player1(playerName), player2("Computer"sv),
-            height(h), width(w) {
+            board(h, w) {
         }
         void initialize();
         bool isDone() const;
@@ -33,6 +38,22 @@ namespace battleship {
             return {2, 3, 4, 5};
         }
 
+        void makeDefaultShips(){
+            ships = {
+                    {"Destroyer", 2},
+                    {"Submarine", 3},
+                    {"Cruiser", 3},
+                    {"Battleship", 4},
+                    {"Carrier", 5}
+            };
+        }
+
+        const vector<ShipRef> &getShipRefs(){
+            if(ships.empty()) {
+              makeDefaultShips();
+            }
+            return ships;
+        }
         void displayBoard() {
 
         }
@@ -41,11 +62,14 @@ namespace battleship {
             // Process the player's move
             std::cout << "Player made a move at (" << row << ", " << col << ")." << std::endl;
         }
+
+//        void getShipNames();
+
     protected:
         // Game board and other protected members can be defined here
-        int height, width;
+        GameBoard board;
         Player player1, player2;
-        vector<Ship> ships; // Example ship sizes
+        vector<ShipRef> ships;
     };
 
 } // battleship

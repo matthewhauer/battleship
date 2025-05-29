@@ -7,6 +7,7 @@
 
 #include <string>
 #include <vector>
+#include <algorithm>
 
 #include "GameBoard.h"
 #include "Ship.h"
@@ -17,21 +18,11 @@ namespace battleship {
     using coord = pair<int, int>;
     class Player {
         public:
-            Player(string_view name) : name(name), myBoard(), enemyBoard() {}
+            Player(string_view name) : name(name) {}
 
             // Method to get the player's name
             string getName() const {
                 return name;
-            }
-
-            // Method to get the player's game board
-            GameBoard getMyBoard() const {
-                return myBoard;
-            }
-
-            // Method to get the enemy's game board
-            GameBoard getEnemyBoard() const {
-                return enemyBoard;
             }
 
             void addShotMade(coord shot) {
@@ -50,9 +41,16 @@ namespace battleship {
                 return shotsFired;
             }
 
-        protected:
+            bool addShip(string_view shipName, int size, int row, int col, char orientation);
+
+            bool allShipsSunk() const;
+
+            const vector<Ship> &getShips() const;
+
+        bool checkOverlap(int row, int col, int shipSize, char orientation) const;
+
+    protected:
             string name;
-            GameBoard myBoard, enemyBoard;
             vector<coord> shotsFired, shotsSeen;
             vector<Ship> ships;
     };
