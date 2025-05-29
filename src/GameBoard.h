@@ -5,7 +5,7 @@
 #ifndef BATTLESHIP_GAMEBOARD_H
 #define BATTLESHIP_GAMEBOARD_H
 
-#include <vector>
+#include <utility>
 
 using namespace std;
 
@@ -13,15 +13,13 @@ namespace battleship {
 
     class GameBoard {
     public:
+        GameBoard(int h, int w) : height(h), width(w) { }
         pair<int, int> getSize() const;
 
     protected:
-        const char WATER{'~'};
-        const char HIT{'X'};
-        const char MISS{'O'};
         const int height{10};
         const int width{10};
-        //vector<vector<char>> board;//{height, vector<char>(width, WATER)}; // 2D vector to represent the game board
+        // maybe represent the board as a 2D vector in the future, to capture board features.
     };
 
 } // battleship

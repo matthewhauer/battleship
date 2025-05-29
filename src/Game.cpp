@@ -13,10 +13,9 @@ namespace battleship {
     bool Game::isDone() const {
         // Check if the game is done (all ships sunk or player quit)
         std::cout << "Checking if game is done." << std::endl;
-        if (ranges::fold_left(ships, false, [](bool acc, const Ship &ship) {
-            return acc || ship.isSunk();
-        })) {
-            return true;
+        if(player1.allShipsSunk() || player2.allShipsSunk()) {
+            std::cout << "Game is done." << std::endl;
+            return true; // game is done
         }
         return false;
     }
@@ -26,25 +25,41 @@ namespace battleship {
     }
 
     bool Game::addShip(Player &thePlayer, int size, int row, int col, char orientation, string_view shipName = "AnonShip"sv) {
+        if(size <= 0) {
+            std::cout << "Invalid ship size. Must be greater than 0." << std::endl;
+            return false; // invalid ship size
+        }
+        const auto [height, width] = board.getSize();
         // Check if the ship can be placed on the board
         if (row < 0 || (row+size-1) >= height || col < 0 || (col+size-1) >= width) {
             std::cout << "Invalid position." << std::endl;
             return false; // invalid position
         }
-        // check for overlap with existing ships
-        for (const auto &ship : ships) {
-            //int shipRow, shipCol;
-            auto [shipRow, shipCol] = ship.getPosition();
-            if (ship.isOverlapping(row, col, size, orientation)) {
-                std::cout << "Overlap with existing ship." << std::endl;
-                return false; // overlap with existing ship
-            }
+        // Check if the orientation is valid
+        if (orientation != 'H' && orientation != 'V') {
+            std::cout << "Invalid orientation. Use 'H' for horizontal or 'V' for vertical." << std::endl;
+            return false;
+        }
+        // Check for overlap with existing ships
+        if(thePlayer.checkOverlap(row, col, size, orientation)) {
+            cout << "No overlap with existing ships." << endl;
+            return false;
         }
         // Add a ship to the game board
-        ships.emplace_back(shipName, size, row, col, orientation);
-        std::cout << "Added ship of shipSize " << size << " at (" << row << ", " << col << ") with orientation " << orientation << "." << std::endl;
-        return true; // successfully added
+        if(thePlayer.addShip(shipName, size, row, col, orientation)) {
+            std::cout << "Added ship of shipSize " << size << " at (" << row << ", " << col << ") with orientation "
+                      << orientation << "." << std::endl;
+            return true; // successfully added
+        } else {
+            std::cout << "Failed to add ship to player." << std::endl;
+            return false; // failed to add ship
+        }
+        return false; // fall-through
     }
+
+//    void Game::getShipNames() {
+//
+//    }
 
     // end of namespace
 } // battleship
