@@ -26,6 +26,7 @@ TEST(GameTest, PlaceShipGood){
 }
 
 TEST(GameTest, PlaceShipGoodEdge){
+    // also tests both orientations...
     battleship::Game game;
     EXPECT_TRUE(game.addShip(battleship::PlayerEnum::HUMAN, 3, 0, 9, 'H', "Cruiser"sv));
     EXPECT_TRUE(game.addShip(battleship::PlayerEnum::HUMAN, 3, 9, 0, 'V', "Cruiser"sv));
@@ -42,6 +43,11 @@ TEST(GameTest, PlaceShipBadLength){
     EXPECT_FALSE(game.addShip(battleship::PlayerEnum::HUMAN, 0, 0, 0, 'H', "Cruiser"sv));
     EXPECT_FALSE(game.addShip(battleship::PlayerEnum::HUMAN, -7, 0, 0, 'H', "Cruiser"sv));
     EXPECT_FALSE(game.addShip(battleship::PlayerEnum::HUMAN, 13, 0, 0, 'H', "Cruiser"sv));
+}
+
+TEST(GameTest, PlaceShipBadOrientation){
+    battleship::Game game;
+    EXPECT_FALSE(game.addShip(battleship::PlayerEnum::HUMAN, 13, 0, 0, 'Z', "Cruiser"sv));
 }
 
 TEST(GameTest, PlaceShipOobOrigin){
