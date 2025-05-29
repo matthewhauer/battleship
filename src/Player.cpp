@@ -26,8 +26,8 @@ namespace battleship {
      * @return true if all ships have been sunk
      */
     bool Player::allShipsSunk() const {
-        if (ranges::fold_left(ships, false, [](bool acc, const Ship &ship) {
-            return acc || ship.isSunk();
+        if (ranges::fold_left(ships, true, [](bool acc, const Ship &ship) {
+            return acc && ship.isSunk();
         })) {
             return true;
         }
