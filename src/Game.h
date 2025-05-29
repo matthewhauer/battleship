@@ -17,8 +17,14 @@
 using namespace std;
 
 struct ShipRef{
-    string_view shipName;
+    string shipName;
     int length;
+};
+
+enum class GameState {
+    SETTING_UP,
+    PLAYING,
+    DONE
 };
 
 namespace battleship {
@@ -28,6 +34,9 @@ namespace battleship {
 
         Game(string_view playerName, int h, int w) : player1(playerName), player2("Computer"sv),
             board(h, w) {
+            if(h <= 0 || w <= 0) {
+                throw std::invalid_argument("Board dimensions must be positive integers.");
+            }
         }
         void initialize();
         bool isDone() const;
@@ -70,6 +79,7 @@ namespace battleship {
         GameBoard board;
         Player player1, player2;
         vector<ShipRef> ships;
+        GameState state = GameState::SETTING_UP;
     };
 
 } // battleship
