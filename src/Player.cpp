@@ -49,11 +49,20 @@ namespace battleship {
     bool Player::checkOverlap(int row, int col, int shipSize, char orientation) const {
         // Check for overlap with existing ships
         for (const auto &ship : ships) {
-            if (ship.isStraightOverlap(row, col, shipSize, orientation)
-                || ship.isCrossOverlap(row, col, shipSize, orientation)) {
+            if (ship.isOverlapping(row, col, shipSize, orientation)) {
                 return true; // Overlap with existing ship
             }
         }
+        return false;
+    }
+
+    bool Player::hasAllShips() const {
+        //TODO implement this
+        return false;
+    }
+
+    bool Player::isReady() const {
+        //TODO implement this
         return false;
     }
 } // battleship

@@ -39,41 +39,11 @@ namespace battleship {
             return make_pair(_row, _col);
         }
 
-        bool isStraightOverlap(int row, int col, int size, char orientation) const {
-            // check same row if 'H' or same column if 'V'
+        bool isStraightOverlap(int row, int col, int size, char orientation) const;
 
-            if(_orientation == 'H') {
-                if(_row == row)
-                    return (_col > col + size -1 && // left of this not impacted
-                            _col + shipSize -1 < col); // right of this not impacted
-            } else { // vertical
-                if(_col == col)
-                    return (_row < row + size && // top of this not impacted
-                            _row + shipSize > row); // bottom of this not impacted
-            }
-            return false;
-        }
+        bool isCrossOverlap(int row, int col, int size, char orientation) const;
 
-        bool isCrossOverlap(int row, int col, int size, char orientation) const {
-            if(_orientation == 'H') {
-                return (_row < row + size
-                        && _row + shipSize > row);
-            } else { // vertical
-                return (_col < col + size
-                        && _col + shipSize > col);
-            }
-        }
-
-        bool isOverlapping(int row, int col, int size, char orientation) const {
-            if(_row == row && _col == col) {
-                return true; // same origin
-            }
-            if(orientation == _orientation){
-                return isStraightOverlap(row, col, size, orientation);
-            } else {
-                return isCrossOverlap(row, col, size, orientation);
-            }
-        }
+        bool isOverlapping(int row, int col, int size, char orientation) const;
 
     private:
         string _name;

@@ -33,7 +33,8 @@ SET(battleship_srcs
 
 SET(battleship_tests
         test/BoardTest.cpp
-        test/GameTest.cpp)
+        test/GameTest.cpp
+        test/ShipTest.cpp)
 
 add_executable(battleship
         src/main.cpp src/main.h

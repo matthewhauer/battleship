@@ -28,9 +28,10 @@ struct ShipRef{
  * Enum representing the state of the game.
  */
 enum class GameState {
-    SETTING_UP, // players are placing ships
-    PLAYING,    // players are taking turns making moves
-    DONE        // game is over, either by one player sinking all ships of the other or quitting
+    NOT_STARTED,    // the game has not been started yet (to place ships)
+    SETTING_UP,     // players are placing ships
+    PLAYING,        // players are taking turns making moves
+    DONE            // game is over, either by one player sinking all ships of the other or quitting
 };
 
 namespace battleship {
@@ -53,8 +54,23 @@ namespace battleship {
         }
         void initialize();
         bool isDone() const;
+
+        /**
+         * Add a ship to the specified player enum (human or computer)
+         * @param playerType
+         * @param size
+         * @param row
+         * @param col
+         * @param orientation
+         * @param shipName
+         * @return
+         */
         bool addShip(PlayerEnum &&playerType, int size, int row, int col, char orientation, string_view shipName);
         bool addShip(Player &player, int size, int row, int col, char orientation, string_view shipName);
+        // game state mutators
+        bool beginSetup();
+        bool beginGame();
+        bool endGame();
 
         vector<int> getShipSizes() {
             return {2, 3, 4, 5};
@@ -65,34 +81,25 @@ namespace battleship {
                     {"Destroyer", 2},
                     {"Submarine", 3},
                     {"Cruiser", 3},
-                    {"Battleship", 4},
-                    {"Carrier", 5}
+                    //{"Battleship", 4},
+                    //{"Carrier", 5}
             };
         }
 
-        const vector<ShipRef> &getShipRefs(){
-            if(ships.empty()) {
-              makeDefaultShips();
-            }
-            return ships;
-        }
-        void displayBoard() {
-
-        }
+        const vector<ShipRef> &getShipRefs();
 
         void makeMove(int row, int col) {
             // Process the player's move
             std::cout << "Player made a move at (" << row << ", " << col << ")." << std::endl;
         }
-
-//        void getShipNames();
-
     protected:
-        // Game board and other protected members can be defined here
         GameBoard board;
-        Player player1, player2;
+        Player player1, player2; // holdover from initial implementation
+        vector<Player> players{player1, player2};
         vector<ShipRef> ships;
-        GameState state = GameState::SETTING_UP;
+        GameState state{GameState::NOT_STARTED};
+
+        vector<Player>::iterator currPlayer;
     };
 
 } // battleship

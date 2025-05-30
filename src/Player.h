@@ -49,6 +49,10 @@ namespace battleship {
 
         bool checkOverlap(int row, int col, int shipSize, char orientation) const;
 
+        bool hasAllShips() const;
+
+        bool isReady() const;
+
     protected:
             string name;
             vector<coord> shotsFired, shotsSeen;
